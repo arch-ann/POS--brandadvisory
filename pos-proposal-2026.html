@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Proposal — Pro Organizer Studio × Arch Ann</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #161918;
+    --ink-mid: #3d4340;
+    --ink-light: #7a847f;
+    --rule: #dde3df;
+    --accent: #3d6b52;
+    --accent-mid: #5a9472;
+    --accent-light: #eaf3ed;
+    --bg: #f6faf7;
+    --white: #ffffff;
+    --warm: #ba7517;
+    --warm-light: #fdf0e4;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { background: var(--bg); font-family: var(--sans); }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(246,250,247,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 40px;
+  }
+
+  .nav-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-links button {
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .nav-links button:hover { color: var(--ink); background: var(--rule); }
+  .nav-links button.active { color: var(--accent); background: var(--accent-light); font-weight: 500; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── SHARED LAYOUT ── */
+  .page-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 52px 40px 100px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-mid);
+  }
+
+  /* ── Typography ── */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  h1 em { font-style: italic; color: var(--accent-mid); }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  section { margin-bottom: 52px; }
+
+  section h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+
+  section p { margin-bottom: 14px; }
+  section p:last-child { margin-bottom: 0; }
+
+  /* ── Header ── */
+  .header { margin-bottom: 48px; }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    gap: 20px;
+  }
+
+  .header-meta {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 2;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .header-meta strong {
+    color: var(--ink-mid);
+    font-weight: 500;
+    display: block;
+  }
+
+  .header-rule { border: none; border-top: 1px solid var(--rule); }
+
+  /* ── Overview ── */
+  .overview {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 52px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .overview p {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── Opportunity ── */
+  .opportunity {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin: 20px 0 0;
+  }
+
+  .opp-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+  }
+
+  .opp-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+  }
+
+  .opp-list li {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .opp-list li::before {
+    content: '→';
+    color: var(--accent-mid);
+    flex-shrink: 0;
+    font-size: 13px;
+  }
+
+  /* ── Phases ── */
+  .phases { margin-top: 8px; }
+
+  .phase {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase:last-child { border-bottom: none; }
+  .phase-meta { padding-top: 2px; }
+
+  .phase-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+  }
+
+  .phase-tag.warm {
+    color: #5a3e28;
+    background: var(--warm-light);
+    border: 1px solid rgba(186,117,23,0.2);
+  }
+
+  .phase-weeks { font-size: 12px; color: var(--ink-light); }
+
+  .phase h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .phase p {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+  }
+
+  .phase-deliverables {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .phase-deliverables li {
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(61,107,82,0.15);
+  }
+
+  .phase-deliverables li.warm {
+    color: #7a4f1e;
+    background: var(--warm-light);
+    border-color: rgba(186,117,23,0.2);
+  }
+
+  /* ── Revamp callout ── */
+  .revamp-callout {
+    background: var(--warm-light);
+    border: 1px solid rgba(186,117,23,0.25);
+    border-left: 3px solid var(--warm);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin-top: 16px;
+  }
+
+  .revamp-callout .rc-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #854f0b;
+    margin-bottom: 8px;
+  }
+
+  .revamp-callout p {
+    font-size: 13.5px;
+    color: #5a3e28;
+    line-height: 1.65;
+    margin-bottom: 0;
+  }
+
+  /* ── Included list ── */
+  .included-list { list-style: none; margin-top: 8px; }
+
+  .included-list li {
+    display: flex;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    align-items: flex-start;
+  }
+
+  .included-list li:last-child { border-bottom: none; }
+
+  .included-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .included-list li.warm-item::before { background: var(--warm); }
+
+  /* ── Why now ── */
+  .why-now {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 28px 32px;
+  }
+
+  .why-now p { font-size: 14.5px; line-height: 1.75; margin-bottom: 14px; }
+
+  /* ── Investment ── */
+  .investment-box {
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 36px 40px;
+    color: var(--white);
+  }
+
+  .investment-box .section-label { color: var(--accent-mid); }
+
+  .investment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    gap: 20px;
+  }
+
+  .investment-row:last-of-type { border-bottom: none; }
+  .investment-row .label { color: rgba(255,255,255,0.5); font-size: 13px; flex-shrink: 0; }
+  .investment-row .value { color: var(--white); font-weight: 500; text-align: right; }
+
+  .payment-schedule {
+    margin-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 16px;
+  }
+
+  .payment-schedule-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+  }
+
+  .payment-rows { display: flex; flex-direction: column; gap: 8px; }
+
+  .payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+
+  .pr-num {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  .pr-when { font-size: 13px; color: rgba(255,255,255,0.55); flex: 1; }
+  .pr-amt { font-size: 15px; font-weight: 500; color: var(--white); }
+
+  .investment-total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .investment-total .t-label {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+  }
+
+  .investment-total .t-value {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--accent-mid);
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Next steps ── */
+  .next-steps {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 32px 36px;
+  }
+
+  .next-steps ol {
+    list-style: none;
+    counter-reset: steps;
+    margin-top: 16px;
+  }
+
+  .next-steps ol li {
+    counter-increment: steps;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .next-steps ol li:last-child { border-bottom: none; }
+
+  .next-steps ol li::before {
+    content: counter(steps, decimal-leading-zero);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-mid);
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  .footer .brand {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* ════════════════
+     AUDIT PAGE
+  ════════════════ */
+  .audit-header { margin-bottom: 36px; }
+
+  .audit-header h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .score-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .sc-label { font-size: 11px; color: var(--ink-light); margin-bottom: 6px; }
+  .sc-num { font-family: var(--serif); font-size: 32px; line-height: 1; margin-bottom: 4px; }
+  .sc-sub { font-size: 11px; color: var(--ink-light); }
+  .sc-bar { height: 3px; background: var(--rule); border-radius: 2px; margin-top: 10px; }
+  .sc-fill { height: 3px; border-radius: 2px; }
+
+  .col-warn { color: #ba7517; } .fill-warn { background: #ba7517; }
+  .col-crit { color: #c0392b; } .fill-crit { background: #c0392b; }
+  .col-good { color: #3d6b52; } .fill-good { background: #3d6b52; }
+
+  .overall-score {
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 28px 32px;
+    color: var(--white);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .os-num { font-family: var(--serif); font-size: 56px; color: #5a9472; line-height: 1; flex-shrink: 0; }
+  .os-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .os-title { font-family: var(--serif); font-size: 18px; color: var(--white); font-style: italic; margin-bottom: 8px; }
+  .os-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  .audit-section {
+    margin-bottom: 20px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .audit-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .audit-section-header h3 {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .sb-warn { background: var(--warm-light); color: #854f0b; }
+  .sb-crit { background: #fdecea; color: #a32d2d; }
+  .sb-good { background: var(--accent-light); color: var(--accent); }
+
+  .finding-row {
+    display: flex;
+    gap: 14px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    align-items: flex-start;
+  }
+
+  .finding-row:last-child { border-bottom: none; }
+
+  .fd { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+  .fd-crit { background: #c0392b; }
+  .fd-warn { background: #ba7517; }
+  .fd-good { background: #3d6b52; }
+
+  .audit-rec {
+    margin: 0 20px 16px;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .audit-rec strong { color: var(--ink); font-weight: 500; }
+
+  /* ════════════════
+     DASHBOARD PAGE
+  ════════════════ */
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    gap: 20px;
+  }
+
+  .dash-header h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .dash-header p { font-size: 13px; color: var(--ink-light); }
+
+  .dash-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 2;
+    flex-shrink: 0;
+  }
+
+  .dash-meta strong { display: block; color: var(--ink-mid); font-weight: 500; }
+
+  /* Status pills */
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .pill-upcoming { background: #eef2f8; color: #3a5fa0; }
+  .pill-active { background: #e8f5ec; color: #2a6e40; }
+  .pill-done { background: var(--rule); color: var(--ink-light); }
+  .pill-pending { background: var(--warm-light); color: #854f0b; }
+
+  /* Phase cards */
+  .phase-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+
+  .phase-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .phase-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+    gap: 12px;
+  }
+
+  .phase-card-left { display: flex; align-items: center; gap: 14px; }
+
+  .phase-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-mid);
+    letter-spacing: 0.08em;
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  .phase-card-title { font-family: var(--serif); font-size: 16px; color: var(--ink); font-weight: 400; }
+  .phase-card-weeks { font-size: 12px; color: var(--ink-light); margin-top: 1px; }
+
+  .phase-card-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+  .phase-progress {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  /* Deliverable rows */
+  .deliverable-list { padding: 0; }
+
+  .deliverable-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 20px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13.5px;
+    color: var(--ink-mid);
+  }
+
+  .deliverable-item:last-child { border-bottom: none; }
+
+  .d-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--rule);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+
+  .d-check:hover { border-color: var(--accent-mid); }
+  .d-check.checked { background: var(--accent); border-color: var(--accent); }
+
+  .d-check.checked::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  .d-label { flex: 1; line-height: 1.4; }
+  .d-label.done { text-decoration: line-through; color: var(--ink-light); }
+
+  .d-link-btn {
+    font-size: 11px;
+    color: var(--accent-mid);
+    background: var(--accent-light);
+    border: 1px solid rgba(61,107,82,0.2);
+    border-radius: 4px;
+    padding: 3px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--sans);
+    transition: all 0.15s;
+  }
+
+  .d-link-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  .d-link-btn.has-link { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Link modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(22,25,24,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .modal h4 {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .modal p { font-size: 13px; color: var(--ink-light); margin-bottom: 16px; }
+
+  .modal input {
+    width: 100%;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border 0.15s;
+    margin-bottom: 12px;
+  }
+
+  .modal input:focus { border-color: var(--accent-mid); }
+
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+
+  .btn-ghost { background: var(--rule); color: var(--ink-mid); }
+  .btn-ghost:hover { background: #cdd5cf; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #2d5140; }
+
+  /* Payment tracker */
+  .payment-tracker { margin-bottom: 40px; }
+
+  .pt-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .pt-rows { display: flex; flex-direction: column; gap: 8px; }
+
+  .pt-row {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .pt-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-mid);
+    letter-spacing: 0.08em;
+    width: 52px;
+    flex-shrink: 0;
+  }
+
+  .pt-info { flex: 1; }
+  .pt-when { font-size: 13px; color: var(--ink-mid); }
+  .pt-note { font-size: 12px; color: var(--ink-light); margin-top: 1px; }
+  .pt-amt { font-family: var(--serif); font-size: 20px; color: var(--ink); flex-shrink: 0; }
+
+  .pt-status-btn {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    font-family: var(--sans);
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .pt-status-btn.unpaid { background: var(--warm-light); color: #854f0b; }
+  .pt-status-btn.paid { background: var(--accent-light); color: var(--accent); }
+
+  /* Quick links */
+  .quick-links { margin-bottom: 40px; }
+
+  .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .ql-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ql-card-label { font-size: 11px; color: var(--ink-light); letter-spacing: 0.03em; }
+  .ql-card-action { font-size: 13.5px; color: var(--ink); font-weight: 500; }
+
+  .ql-link-area { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+
+  .ql-input {
+    flex: 1;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: var(--sans);
+    color: var(--ink);
+    outline: none;
+  }
+
+  .ql-input:focus { border-color: var(--accent-mid); }
+
+  .ql-open-btn {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 4px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    white-space: nowrap;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .ql-open-btn:hover { background: var(--accent); color: white; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .page-body { padding: 32px 20px 80px; }
+    .top-bar, .dash-header { flex-direction: column; }
+    .header-meta, .dash-meta { text-align: left; }
+    .opp-list { grid-template-columns: 1fr; }
+    .phase { grid-template-columns: 1fr; gap: 8px; }
+    .investment-box { padding: 24px 20px; }
+    .next-steps { padding: 24px 20px; }
+    .score-grid { grid-template-columns: 1fr 1fr; }
+    .overall-score { flex-direction: column; gap: 16px; }
+    .ql-grid { grid-template-columns: 1fr; }
+    .site-nav { padding: 0 16px; }
+    .nav-links button { padding: 6px 10px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <span class="nav-brand">POS × Arch Ann</span>
+    <div class="nav-links">
+      <button class="active" onclick="showPage('proposal', this)">Proposal</button>
+      <button onclick="showPage('audit', this)">Brand Audit</button>
+      <button onclick="showPage('dashboard', this)">Dashboard</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     PROPOSAL PAGE
+══════════════════════════════════════ -->
+<div id="page-proposal" class="page active">
+<div class="page-body">
+
+  <div class="header">
+    <div class="top-bar">
+      <div>
+        <div class="eyebrow">Project Proposal · 2026</div>
+        <h1>Pro Organizer<br><em>Studio</em></h1>
+      </div>
+      <div class="header-meta">
+        <strong>Prepared for</strong>
+        Cabri Caldwell & Melissa<br>
+        Pro Organizer Studio
+        <br><br>
+        <strong>Prepared by</strong>
+        Arch Ann LLC<br>
+        Bailey Armendarez
+        <br><br>
+        <strong>Start Date</strong>
+        June 17, 2026
+      </div>
+    </div>
+    <hr class="header-rule">
+  </div>
+
+  <div class="overview">
+    <p>Pro Organizer Studio has the audience, the expertise, and a revenue model already in place. What's missing is the infrastructure to convert — clear brand messaging, a visual identity that matches the authority you've earned, and a digital experience built to turn interest into income.</p>
+  </div>
+
+  <section>
+    <div class="section-label">The Opportunity</div>
+    <h2>What's on the table</h2>
+    <p>POS sits in a high-value niche — professional organizer education and community — with real competitive advantages: an established audience, proven methodology, and founders with credibility in the space. The gap isn't the product. It's the path from discovery to conversion, and the visual identity that signals you belong at the premium tier you've already earned.</p>
+
+    <div class="opportunity">
+      <div class="opp-label">Current gaps we're solving</div>
+      <ul class="opp-list">
+        <li>Brand messaging doesn't fully capture what POS stands for</li>
+        <li>Visual identity doesn't reflect the brand's authority or premium position</li>
+        <li>No defined customer journey from awareness to purchase</li>
+        <li>Website doesn't lead visitors toward a decision</li>
+        <li>Email-to-website conversion path is unclear</li>
+        <li>Revenue model exists but needs better routing and visibility</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Project Scope</div>
+    <h2>What we're building</h2>
+    <p>This is a complete brand and conversion overhaul — from the visual identity POS shows to the world, to a ground-up website revamp, to the way visitors move through the site and into paid offers. Delivered in five focused phases over 10–12 weeks.</p>
+
+    <div class="phases">
+
+      <div class="phase">
+        <div class="phase-meta">
+          <span class="phase-tag">Phase 1</span>
+          <div class="phase-weeks">Weeks 1–2</div>
+        </div>
+        <div>
+          <h3>Brand Foundation</h3>
+          <p>Clarify what POS stands for, who it's for, and what makes it different. This becomes the filter every visual decision, piece of copy, and content direction runs through.</p>
+          <ul class="phase-deliverables">
+            <li>Brand messaging guide</li>
+            <li>Core positioning statement</li>
+            <li>Audience definition</li>
+            <li>Value proposition framework</li>
+            <li>Brand voice + tone guide</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <span class="phase-tag warm">Phase 2</span>
+          <div class="phase-weeks">Weeks 3–5</div>
+        </div>
+        <div>
+          <h3>Brand Identity System</h3>
+          <p>Build a cohesive brand identity that reflects the premium, authority-driven brand POS has become. This phase is strongly recommended — the current site undersells what POS has built. A consistent, elevated visual language will directly impact perceived value and conversion.</p>
+          <ul class="phase-deliverables">
+            <li class="warm">Color system</li>
+            <li class="warm">Typography system</li>
+            <li class="warm">Logo suite + brand assets</li>
+            <li class="warm">Brand identity guide</li>
+            <li class="warm">Web design direction</li>
+            <li class="warm">Visual component library</li>
+          </ul>
+
+          <div class="revamp-callout">
+            <div class="rc-label">Why this is included — and why it matters</div>
+            <p>A site audit of proorganizerstudio.com identified a critical gap: the brand's authority, community size, and product quality are not reflected in the current visual experience. There is no defined color palette, typography is inconsistent across pages, and the overall design reads as default rather than premium. A full brand identity system — covering color, typography, logo suite, and brand assets — gives every other piece of this project a stronger foundation to build on. It's the difference between a well-written site and a site that converts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <span class="phase-tag warm">Phase 3</span>
+          <div class="phase-weeks">Weeks 6–8</div>
+        </div>
+        <div>
+          <h3>Website Revamp</h3>
+          <p>Rebuild the POS digital experience using the brand identity system established in Phase 2. This is a ground-up redesign of the site — not a refresh — built to reflect the authority of the brand, eliminate the friction points identified in the audit, and move visitors toward a clear decision. Every page will have a defined purpose, a single primary action, and a visual experience that matches what POS has actually built.</p>
+          <ul class="phase-deliverables">
+            <li class="warm">Full site redesign</li>
+            <li class="warm">Homepage rebuild</li>
+            <li class="warm">Services + offer pages</li>
+            <li class="warm">About page</li>
+            <li class="warm">Navigation restructure</li>
+            <li class="warm">Email opt-in integration</li>
+            <li class="warm">Domain + URL cleanup</li>
+            <li class="warm">Mobile optimization</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <span class="phase-tag">Phase 4</span>
+          <div class="phase-weeks">Weeks 9–10</div>
+        </div>
+        <div>
+          <h3>Conversion Strategy</h3>
+          <p>Define the systems and strategy that turn an interested visitor into a paying customer. This phase delivers a clear conversion framework, customer journey architecture, and documented recommendations your team can implement — giving POS a repeatable, scalable path from awareness to revenue.</p>
+          <ul class="phase-deliverables">
+            <li>Website copy rewrite</li>
+            <li>Customer journey map</li>
+            <li>Conversion strategy + recommendations</li>
+            <li>Email funnel strategy</li>
+            <li>Lead magnet recommendations</li>
+            <li>CTA framework</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <span class="phase-tag">Phase 5</span>
+          <div class="phase-weeks">Weeks 11–12</div>
+        </div>
+        <div>
+          <h3>Operational Support</h3>
+          <p>Document the systems, processes, and workflows that let POS run without everything living in someone's head. Set up a simple performance tracking cadence so growth is measurable from here forward.</p>
+          <ul class="phase-deliverables">
+            <li>Operations documentation</li>
+            <li>Standard operating procedures</li>
+            <li>Content workflow system</li>
+            <li>Metrics + reporting setup</li>
+            <li>90-day growth roadmap</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Full Deliverables</div>
+    <h2>Everything included in this project</h2>
+    <ul class="included-list">
+      <li>Complete brand messaging guide — positioning, voice, audience, value proposition</li>
+      <li class="warm-item">Brand identity system — color palette, typography system, logo suite + full brand asset library</li>
+      <li class="warm-item">Brand identity guide — the complete reference for all future design and content decisions</li>
+      <li class="warm-item">Full website revamp — ground-up redesign across all key pages built on the new brand identity</li>
+      <li class="warm-item">Navigation restructure, URL cleanup, domain consolidation, and email opt-in integration</li>
+      <li>Website copy rewrite across all key pages (home, about, services, offers)</li>
+      <li>Customer journey architecture — full map from first touch to paid conversion</li>
+      <li>Conversion strategy + recommendations for your team to implement</li>
+      <li>Email funnel strategy and recommendations (your team executes)</li>
+      <li>Lead magnet recommendations to grow and activate the audience</li>
+      <li>Operations documentation — processes, SOPs, and workflow systems</li>
+      <li>Content workflow built for sustainable, consistent publishing</li>
+      <li>Performance metrics setup and 90-day growth roadmap</li>
+      <li>Weekly working sessions throughout the project (60 min)</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="why-now">
+      <div class="section-label">Why this matters now</div>
+      <p>POS already has the hard thing — a real audience that trusts you. Every month that passes without a clear conversion path, a brand identity that commands the premium tier, and a website built to close is revenue already being left on the table.</p>
+      <p style="margin-bottom: 0;">The audience exists. The products exist. The credibility is there. What's missing is the infrastructure that makes all of it work together — and that's exactly what this project builds.</p>
+    </div>
+  </section>
+
+  <section>
+    <div style="background: var(--ink); border-radius: 10px; padding: 32px 36px; color: var(--white);">
+      <div style="font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 16px;">The ROI Case</div>
+      <p style="font-family: var(--serif); font-size: 22px; color: var(--white); font-style: italic; line-height: 1.4; margin-bottom: 20px;">This isn't a branding project. It's a revenue infrastructure project.</p>
+      <p style="font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 16px;">POS has a community of 1,000+ members, a podcast library of 250+ episodes, and a proven product in Inspired Organizer. Every piece of this project — the brand identity, the website revamp, the conversion strategy, the operational systems — is designed to remove the friction standing between that existing audience and deeper revenue.</p>
+      <p style="font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 24px;">The pieces of this project can be replicated, but not without the strategic foundation underneath them. A new color palette without a positioning strategy is decoration. A website revamp without a conversion framework is a renovation that doesn't improve occupancy. This engagement works because it builds everything in the right order — from foundation to infrastructure to execution — and hands you a system that compounds.</p>
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px;">Conservative 10x return scenario</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7;">A 10–15% lift in IO conversion from a fixed, high-converting site<br>+ a single optimized email funnel to your existing list<br>= $125,000+ in incremental annual revenue at current pricing.</div>
+        </div>
+        <div style="text-align: right; flex-shrink: 0;">
+          <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 4px;">Investment</div>
+          <div style="font-family: var(--serif); font-size: 28px; color: var(--accent-mid);">$12,500</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="investment-box">
+      <div class="section-label">Investment</div>
+
+      <div class="investment-row">
+        <span class="label">Project fee</span>
+        <span class="value">$12,500</span>
+      </div>
+      <div class="investment-row">
+        <span class="label">Start date</span>
+        <span class="value">June 17, 2026</span>
+      </div>
+      <div class="investment-row">
+        <span class="label">Project duration</span>
+        <span class="value">10–12 weeks</span>
+      </div>
+      <div class="investment-row">
+        <span class="label">Session cadence</span>
+        <span class="value">Weekly working sessions (60 min)</span>
+      </div>
+      <div class="payment-schedule">
+        <div class="payment-schedule-label">Payment schedule — 3 installments</div>
+        <div class="payment-rows">
+          <div class="payment-row">
+            <span class="pr-num">01 of 03</span>
+            <span class="pr-when">Due at contract signing · June 17</span>
+            <span class="pr-amt">$4,167</span>
+          </div>
+          <div class="payment-row">
+            <span class="pr-num">02 of 03</span>
+            <span class="pr-when">Due at Phase 2 completion · approx. Week 5</span>
+            <span class="pr-amt">$4,167</span>
+          </div>
+          <div class="payment-row">
+            <span class="pr-num">03 of 03</span>
+            <span class="pr-when">Due at project completion · approx. Week 10</span>
+            <span class="pr-amt">$4,166</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="investment-total">
+        <span class="t-label">Total project investment</span>
+        <span class="t-value">$12,500</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="next-steps">
+      <div class="section-label">Next Steps</div>
+      <h2 style="font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 4px;">Ready to get started?</h2>
+      <ol>
+        <li>Review this proposal — questions welcome before signing</li>
+        <li>Sign the project contract and submit first payment ($4,167)</li>
+        <li>Kickoff call scheduled for week of June 17 — brand audit review + goal alignment</li>
+        <li>Phase 1 work begins and weekly working sessions are set on the calendar</li>
+      </ol>
+      <div style="margin-top: 24px; padding: 18px 20px; background: var(--accent-light); border-radius: 6px; font-size: 13.5px; color: var(--ink-mid);">
+        <strong style="color: var(--ink); font-weight: 500;">Contract + First Payment →</strong><br>
+        <a href="https://archannllc.hbportal.co/flow/6a29f2cd292e016e1fc52faa?hash=e07969f7a2ca9a00267a0b9c5efbb10b" target="_blank" style="color: var(--accent); font-size: 13px; word-break: break-all;">archannllc.hbportal.co/flow/69c30fbb9205d00028ac980c</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="brand">Arch Ann LLC</span>
+    <span>Questions? Reach Bailey Armendarez directly</span>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     AUDIT PAGE
+══════════════════════════════════════ -->
+<div id="page-audit" class="page">
+<div class="page-body">
+
+  <div class="audit-header">
+    <div class="eyebrow">Appendix · Site + Brand Audit</div>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:8px;">Pro Organizer Studio<br><em style="font-style:italic;color:var(--accent-mid);">Findings & Recommendations</em></h2>
+    <p style="font-size:13px;color:var(--ink-light);margin-top:10px;">Conducted June 2026 · proorganizerstudio.com · Prepared by Arch Ann LLC</p>
+  </div>
+
+  <div class="overall-score">
+    <div class="os-num">67</div>
+    <div>
+      <div class="os-label">Overall brand health · out of 100</div>
+      <div class="os-title">Needs elevation</div>
+      <div class="os-desc">Strong substance and community, held back by visual inconsistency and unclear positioning hierarchy. The authority is earned — the brand identity just hasn't caught up to it yet.</div>
+    </div>
+  </div>
+
+  <div class="score-grid">
+    <div class="score-card">
+      <div class="sc-label">Brand clarity</div>
+      <div class="sc-num col-warn">62</div>
+      <div class="sc-sub">mixed signals</div>
+      <div class="sc-bar"><div class="sc-fill fill-warn" style="width:62%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="sc-label">Brand identity</div>
+      <div class="sc-num col-crit">48</div>
+      <div class="sc-sub">no system in place</div>
+      <div class="sc-bar"><div class="sc-fill fill-crit" style="width:48%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="sc-label">Copy & voice</div>
+      <div class="sc-num col-good">74</div>
+      <div class="sc-sub">strongest asset</div>
+      <div class="sc-bar"><div class="sc-fill fill-good" style="width:74%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="sc-label">UX & navigation</div>
+      <div class="sc-num col-warn">61</div>
+      <div class="sc-sub">functional gaps</div>
+      <div class="sc-bar"><div class="sc-fill fill-warn" style="width:61%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="sc-label">Conversion design</div>
+      <div class="sc-num col-warn">65</div>
+      <div class="sc-sub">diluted CTAs</div>
+      <div class="sc-bar"><div class="sc-fill fill-warn" style="width:65%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="sc-label">SEO & metadata</div>
+      <div class="sc-num col-crit">50</div>
+      <div class="sc-sub">critical gaps</div>
+      <div class="sc-bar"><div class="sc-fill fill-crit" style="width:50%"></div></div>
+    </div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>Brand clarity & positioning</h3>
+      <span class="status-badge sb-warn">mixed signals</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>The homepage opens with competing headlines with no single brand promise anchoring the experience — "You were MADE to organize" alongside "We help professional organizers GET CLIENTS."</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>POS, Inspired Organizer®, inspiredorganizer.com, and theinspiredorganizers.com read as separate brands. Visitors encounter multiple domains mid-funnel with no clarity on what belongs where.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>The About page mixes Melissa's origin story, Cabri's brand portfolio, and POS's services without a cohesive throughline.</div></div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>"Substance over fluff / no gatekeeping" is genuinely differentiated positioning — it reads as earned authority, not marketing speak. This is an asset worth centering.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> Establish a single governing brand promise and make every page subordinate to it. Define POS as the motherbrand and IO as the flagship product — not co-equals competing for attention.</div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>Brand identity</h3>
+      <span class="status-badge sb-crit">highest priority</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>No defined color system. The site mixes stock photography tones, neutral backgrounds, and scattered bold text with no palette discipline — it reads as assembled, not designed.</div></div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>Typography is inconsistent: heading sizes, weights, and styles vary across sections with no clear hierarchy. The overall effect works against the premium positioning the brand has earned.</div></div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>No primary brand color exists anywhere on the site. For a brand pursuing elevated positioning, this is the single highest-impact gap to close.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>Logo assets are inconsistently applied — no defined clear space, no secondary lockups, no guidance on color variants for different backgrounds.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> Build a complete brand identity system — defined color palette, locked typography, full logo suite with brand assets — and document it as a brand identity guide. This is Phase 2 of the proposed project and is the foundation everything else builds on.</div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>Copy & voice</h3>
+      <span class="status-badge sb-good">strongest asset</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>The voice is warm, direct, and specific. "We don't make you figure it out for yourself" and "Substance over fluff, no gatekeeping" are strong, earned brand statements.</div></div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>Cabri's About copy is compelling — the ADHD, RV, and hoarding family backstory earns trust quickly and positions her as authentic rather than aspirational.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>The $50k/month claim appears three times without attribution or case study support. By the third instance it reads as pressure rather than proof.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>"Stop color-coding your closet for just a minute" is buried in the footer. It belongs above the fold — it's the best line on the site.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> Anchor the $50k/month stat to one named case study or retire it. Elevate the "stop color-coding your closet" line to a hero position. Let the voice do more of the conversion work — it's the brand's clearest competitive advantage.</div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>UX & navigation</h3>
+      <span class="status-badge sb-warn">functional gaps</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>A live public link on the services page points to verano-template.squarespace.com — a placeholder that was never removed. Fix immediately.</div></div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>The Services nav link uses a long unclean slug URL (/services-programs-pro-organizer-studio-inspired-organizer) — a technical SEO issue that signals an unfinished site.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>Footer and main navigation point to different URLs for the same pages — confusing for users and problematic for search crawlers.</div></div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>The podcast library (250+ episodes) is a genuine authority and SEO asset — episode titles directly match what prospective organizers are searching for.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> Remove the template placeholder link today. Normalize the /services URL. Align all nav destinations between header and footer. These are quick wins with immediate impact.</div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>Conversion design</h3>
+      <span class="status-badge sb-warn">diluted CTAs</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>The homepage presents six or more competing calls to action at the same visual level — visitors have no clear primary path to take.</div></div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>The primary conversion (joining Inspired Organizer) sends visitors to two different external domains. The inconsistency breaks trust at the moment of purchase intent.</div></div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>No email capture exists on the homepage. For a business with 250+ podcast episodes and a large content library, this is a significant missed revenue asset.</div></div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>Testimonials are specific, named, and outcome-focused — they're doing real conversion work and are well-placed throughout the site.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> One primary CTA per page. Add a visible email opt-in with a free resource to capture leads before they're ready to buy. Consolidate IO purchase flow to a single domain.</div>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-header">
+      <h3>SEO & metadata</h3>
+      <span class="status-badge sb-crit">critical gaps</span>
+    </div>
+    <div class="finding-row"><div class="fd fd-crit"></div><div>Every page reviewed has a completely empty meta description tag. Google is writing its own snippets from random page content.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>All page title tags default to "Pro Organizer Studio" with no page-specific keyword targeting.</div></div>
+    <div class="finding-row"><div class="fd fd-warn"></div><div>The /become-a-professional-organizer URL is strong keyword targeting — but only if the page fully delivers on that search intent, which the nav label "Blog+Resources" doesn't signal.</div></div>
+    <div class="finding-row"><div class="fd fd-good"></div><div>Episode titles in the podcast library are naturally keyword-rich and match real search queries — an untapped organic traffic asset that needs proper on-page structure.</div></div>
+    <div class="audit-rec"><strong>Recommendation:</strong> Write unique meta descriptions for every page — a 30-minute fix with outsized impact. Set unique, keyword-targeted title tags per page. Audit podcast episode pages for crawlable H1 tags and show notes.</div>
+  </div>
+
+  <div class="footer">
+    <span class="brand">Arch Ann LLC</span>
+    <span>Brand audit conducted June 2026 · proorganizerstudio.com</span>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     DASHBOARD PAGE
+══════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+<div class="page-body">
+
+  <div class="dash-header">
+    <div>
+      <div class="eyebrow">Project Dashboard</div>
+      <h2>POS × Arch Ann</h2>
+      <p>Live project tracker · June 17 – August 2026</p>
+    </div>
+    <div class="dash-meta">
+      <strong>Start date</strong>June 17, 2026
+      <strong style="margin-top:8px;">Duration</strong>8–10 weeks
+      <strong style="margin-top:8px;">Total</strong>$12,500
+    </div>
+  </div>
+
+  <!-- Quick links -->
+  <div class="quick-links">
+    <div class="pt-label">Quick Links</div>
+    <div class="ql-grid" id="quickLinksGrid">
+      <div class="ql-card">
+        <div class="ql-card-label">Contract</div>
+        <div class="ql-card-action">HoneyBook Agreement</div>
+        <div class="ql-link-area">
+          <input class="ql-input" id="ql-contract" placeholder="Paste HoneyBook link..." value="https://archannllc.hbportal.co/flow/6a29f2cd292e016e1fc52faa?hash=e07969f7a2ca9a00267a0b9c5efbb10b" onchange="saveQL('ql-contract')" />
+          <a class="ql-open-btn" id="ql-contract-btn" href="#" target="_blank" onclick="openQL('ql-contract', event)">Open</a>
+        </div>
+      </div>
+      <div class="ql-card">
+        <div class="ql-card-label">Shared Workspace</div>
+        <div class="ql-card-action">Project Files + Deliverables</div>
+        <div class="ql-link-area">
+          <input class="ql-input" id="ql-workspace" placeholder="Paste Google Drive / folder link..." onchange="saveQL('ql-workspace')" />
+          <a class="ql-open-btn" id="ql-workspace-btn" href="#" target="_blank" onclick="openQL('ql-workspace', event)">Open</a>
+        </div>
+      </div>
+      <div class="ql-card">
+        <div class="ql-card-label">Kickoff Recording</div>
+        <div class="ql-card-action">Session Notes + Video</div>
+        <div class="ql-link-area">
+          <input class="ql-input" id="ql-kickoff" placeholder="Paste recording link..." onchange="saveQL('ql-kickoff')" />
+          <a class="ql-open-btn" id="ql-kickoff-btn" href="#" target="_blank" onclick="openQL('ql-kickoff', event)">Open</a>
+        </div>
+      </div>
+      <div class="ql-card">
+        <div class="ql-card-label">Scheduling</div>
+        <div class="ql-card-action">Weekly Session Calendar</div>
+        <div class="ql-link-area">
+          <input class="ql-input" id="ql-cal" placeholder="Paste Calendly / booking link..." onchange="saveQL('ql-cal')" />
+          <a class="ql-open-btn" id="ql-cal-btn" href="#" target="_blank" onclick="openQL('ql-cal', event)">Open</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment tracker -->
+  <div class="payment-tracker">
+    <div class="pt-label">Payment Schedule</div>
+    <div class="pt-rows">
+      <div class="pt-row">
+        <span class="pt-num">01 / 03</span>
+        <div class="pt-info">
+          <div class="pt-when">Due at contract signing</div>
+          <div class="pt-note">June 17, 2026</div>
+        </div>
+        <span class="pt-amt">$4,167</span>
+        <button class="pt-status-btn unpaid" id="pay-1" onclick="togglePayment(1)">Unpaid</button>
+      </div>
+      <div class="pt-row">
+        <span class="pt-num">02 / 03</span>
+        <div class="pt-info">
+          <div class="pt-when">Due at Phase 2 completion</div>
+          <div class="pt-note">Approx. Week 5 · mid-July 2026</div>
+        </div>
+        <span class="pt-amt">$4,167</span>
+        <button class="pt-status-btn unpaid" id="pay-2" onclick="togglePayment(2)">Unpaid</button>
+      </div>
+      <div class="pt-row">
+        <span class="pt-num">03 / 03</span>
+        <div class="pt-info">
+          <div class="pt-when">Due at project completion</div>
+          <div class="pt-note">Approx. Week 10 · late August 2026</div>
+        </div>
+        <span class="pt-amt">$4,166</span>
+        <button class="pt-status-btn unpaid" id="pay-3" onclick="togglePayment(3)">Unpaid</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase tracker -->
+  <div>
+    <div class="pt-label">Project Phases</div>
+    <div class="phase-cards" id="phaseCards">
+
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-card-left">
+            <span class="phase-num">01</span>
+            <div>
+              <div class="phase-card-title">Brand Foundation</div>
+              <div class="phase-card-weeks">Weeks 1–2 · June 17–27</div>
+            </div>
+          </div>
+          <div class="phase-card-right">
+            <span class="phase-progress" id="prog-1">0 / 5</span>
+            <span class="pill pill-upcoming" id="status-1">Upcoming</span>
+          </div>
+        </div>
+        <div class="deliverable-list" id="phase-1">
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Brand messaging guide</span><button class="d-link-btn" onclick="openLinkModal(this, 'Brand messaging guide')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Core positioning statement</span><button class="d-link-btn" onclick="openLinkModal(this, 'Core positioning statement')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Audience definition</span><button class="d-link-btn" onclick="openLinkModal(this, 'Audience definition')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Value proposition framework</span><button class="d-link-btn" onclick="openLinkModal(this, 'Value proposition framework')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Brand voice + tone guide</span><button class="d-link-btn" onclick="openLinkModal(this, 'Brand voice + tone guide')">+ Link</button></div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-card-left">
+            <span class="phase-num">02</span>
+            <div>
+              <div class="phase-card-title">Brand Identity System</div>
+              <div class="phase-card-weeks">Weeks 3–5 · June 30 – July 18</div>
+            </div>
+          </div>
+          <div class="phase-card-right">
+            <span class="phase-progress" id="prog-2">0 / 6</span>
+            <span class="pill pill-upcoming" id="status-2">Upcoming</span>
+          </div>
+        </div>
+        <div class="deliverable-list" id="phase-2">
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Color system</span><button class="d-link-btn" onclick="openLinkModal(this, 'Color system')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Typography system</span><button class="d-link-btn" onclick="openLinkModal(this, 'Typography system')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Logo suite + brand asset library</span><button class="d-link-btn" onclick="openLinkModal(this, 'Logo suite + brand asset library')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Brand identity guide</span><button class="d-link-btn" onclick="openLinkModal(this, 'Brand identity guide')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Web design direction</span><button class="d-link-btn" onclick="openLinkModal(this, 'Web design direction')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Visual component library</span><button class="d-link-btn" onclick="openLinkModal(this, 'Visual component library')">+ Link</button></div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-card-left">
+            <span class="phase-num">03</span>
+            <div>
+              <div class="phase-card-title">Website Revamp</div>
+              <div class="phase-card-weeks">Weeks 6–8 · July 21 – Aug 8</div>
+            </div>
+          </div>
+          <div class="phase-card-right">
+            <span class="phase-progress" id="prog-3">0 / 8</span>
+            <span class="pill pill-upcoming" id="status-3">Upcoming</span>
+          </div>
+        </div>
+        <div class="deliverable-list" id="phase-3">
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Full site redesign</span><button class="d-link-btn" onclick="openLinkModal(this, 'Full site redesign')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Homepage rebuild</span><button class="d-link-btn" onclick="openLinkModal(this, 'Homepage rebuild')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Services + offer pages</span><button class="d-link-btn" onclick="openLinkModal(this, 'Services + offer pages')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">About page</span><button class="d-link-btn" onclick="openLinkModal(this, 'About page')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Navigation restructure</span><button class="d-link-btn" onclick="openLinkModal(this, 'Navigation restructure')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Email opt-in integration</span><button class="d-link-btn" onclick="openLinkModal(this, 'Email opt-in integration')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Domain + URL cleanup</span><button class="d-link-btn" onclick="openLinkModal(this, 'Domain + URL cleanup')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Mobile optimization</span><button class="d-link-btn" onclick="openLinkModal(this, 'Mobile optimization')">+ Link</button></div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-card-left">
+            <span class="phase-num">04</span>
+            <div>
+              <div class="phase-card-title">Conversion Strategy</div>
+              <div class="phase-card-weeks">Weeks 9–10 · Aug 11–22</div>
+            </div>
+          </div>
+          <div class="phase-card-right">
+            <span class="phase-progress" id="prog-4">0 / 6</span>
+            <span class="pill pill-upcoming" id="status-4">Upcoming</span>
+          </div>
+        </div>
+        <div class="deliverable-list" id="phase-4">
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Website copy rewrite</span><button class="d-link-btn" onclick="openLinkModal(this, 'Website copy rewrite')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Customer journey map</span><button class="d-link-btn" onclick="openLinkModal(this, 'Customer journey map')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Conversion strategy + recommendations</span><button class="d-link-btn" onclick="openLinkModal(this, 'Conversion strategy + recommendations')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Email funnel strategy</span><button class="d-link-btn" onclick="openLinkModal(this, 'Email funnel strategy')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Lead magnet recommendations</span><button class="d-link-btn" onclick="openLinkModal(this, 'Lead magnet recommendations')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">CTA framework</span><button class="d-link-btn" onclick="openLinkModal(this, 'CTA framework')">+ Link</button></div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-card-left">
+            <span class="phase-num">05</span>
+            <div>
+              <div class="phase-card-title">Operational Support</div>
+              <div class="phase-card-weeks">Weeks 11–12 · Aug 25 – Sep 5</div>
+            </div>
+          </div>
+          <div class="phase-card-right">
+            <span class="phase-progress" id="prog-5">0 / 5</span>
+            <span class="pill pill-upcoming" id="status-5">Upcoming</span>
+          </div>
+        </div>
+        <div class="deliverable-list" id="phase-5">
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Operations documentation</span><button class="d-link-btn" onclick="openLinkModal(this, 'Operations documentation')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Standard operating procedures</span><button class="d-link-btn" onclick="openLinkModal(this, 'Standard operating procedures')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Content workflow system</span><button class="d-link-btn" onclick="openLinkModal(this, 'Content workflow system')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">Metrics + reporting setup</span><button class="d-link-btn" onclick="openLinkModal(this, 'Metrics + reporting setup')">+ Link</button></div>
+          <div class="deliverable-item"><div class="d-check" onclick="toggleCheck(this)"></div><span class="d-label">90-day growth roadmap</span><button class="d-link-btn" onclick="openLinkModal(this, '90-day growth roadmap')">+ Link</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="brand">Arch Ann LLC</span>
+    <span>POS × Arch Ann · Project Dashboard</span>
+  </div>
+
+</div>
+</div>
+
+<!-- Link Modal -->
+<div class="modal-overlay" id="linkModal">
+  <div class="modal">
+    <h4 id="modalTitle">Add deliverable link</h4>
+    <p id="modalDesc">Paste a link to the completed deliverable — Google Doc, Drive folder, Figma file, etc.</p>
+    <input type="url" id="modalInput" placeholder="https://..." />
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLink()">Save Link</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Page nav
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── Deliverable checkboxes
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    const label = el.nextElementSibling;
+    label.classList.toggle('done');
+    updatePhaseProgress();
+  }
+
+  function updatePhaseProgress() {
+    for (let i = 1; i <= 5; i++) {
+      const phase = document.getElementById('phase-' + i);
+      if (!phase) continue;
+      const checks = phase.querySelectorAll('.d-check');
+      const done = phase.querySelectorAll('.d-check.checked').length;
+      const total = checks.length;
+      document.getElementById('prog-' + i).textContent = done + ' / ' + total;
+      const status = document.getElementById('status-' + i);
+      if (done === 0) {
+        status.className = 'pill pill-upcoming';
+        status.textContent = 'Upcoming';
+      } else if (done < total) {
+        status.className = 'pill pill-active';
+        status.textContent = 'In Progress';
+      } else {
+        status.className = 'pill pill-done';
+        status.textContent = 'Complete';
+      }
+    }
+  }
+
+  // ── Link modal
+  let activeBtn = null;
+
+  function openLinkModal(btn, name) {
+    activeBtn = btn;
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalDesc').textContent = 'Paste a link to this deliverable — Google Doc, Drive folder, Figma file, or any URL.';
+    const existing = btn.dataset.url || '';
+    document.getElementById('modalInput').value = existing;
+    document.getElementById('linkModal').classList.add('open');
+    setTimeout(() => document.getElementById('modalInput').focus(), 100);
+  }
+
+  function closeModal() {
+    document.getElementById('linkModal').classList.remove('open');
+    activeBtn = null;
+  }
+
+  function saveLink() {
+    const url = document.getElementById('modalInput').value.trim();
+    if (activeBtn) {
+      if (url) {
+        activeBtn.dataset.url = url;
+        activeBtn.textContent = 'Open ↗';
+        activeBtn.classList.add('has-link');
+        activeBtn.onclick = function(e) { e.stopPropagation(); window.open(url, '_blank'); };
+      } else {
+        activeBtn.dataset.url = '';
+        activeBtn.textContent = '+ Link';
+        activeBtn.classList.remove('has-link');
+        activeBtn.onclick = function() { openLinkModal(activeBtn, activeBtn.closest('.deliverable-item').querySelector('.d-label').textContent); };
+      }
+    }
+    closeModal();
+  }
+
+  document.getElementById('linkModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  document.getElementById('modalInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') saveLink();
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ── Payment toggle
+  function togglePayment(n) {
+    const btn = document.getElementById('pay-' + n);
+    if (btn.classList.contains('unpaid')) {
+      btn.classList.remove('unpaid');
+      btn.classList.add('paid');
+      btn.textContent = 'Paid ✓';
+    } else {
+      btn.classList.remove('paid');
+      btn.classList.add('unpaid');
+      btn.textContent = 'Unpaid';
+    }
+  }
+
+  // ── Quick links
+  function saveQL(id) {
+    // value is already in the input, just used for open
+  }
+
+  function openQL(id, e) {
+    const val = document.getElementById(id).value.trim();
+    if (!val) { e.preventDefault(); return; }
+    document.getElementById(id + '-btn').href = val;
+  }
+</script>
+
+</body>
+</html>
